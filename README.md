@@ -1,2 +1,2 @@
 # Algorithm-Analysis
-Repository for the "Algorithm Analysis" course.
+Repository for the "Algorithms Analysis" course.
