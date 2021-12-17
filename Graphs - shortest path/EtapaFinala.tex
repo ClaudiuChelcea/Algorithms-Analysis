@@ -1,0 +1,214 @@
+% Graphs - Shortest path
+% Shortest  path from a node to all nodes
+
+% Algorithms
+	% Dijkstra
+	% Bellman-Ford
+	% Others
+	
+\documentclass[runningheads]{llncs}
+
+% Packages
+\usepackage{graphicx}
+
+% Command renewals
+%\renewcommand\UrlFont{\color{blue}\rmfamily}
+\renewcommand{\refname}{Referin\c{t}e}
+
+% Information
+\title{Proiect Analiza Algoritmilor}
+\author{Chelcea Claudiu-Marian\orcidID{322CA}}
+\institute{Universitatea Politehnica din Bucure\c{s}ti\\Facultatea de Automatic\u{a} \c{s}i Calculatoare\\ \email{claudiuchelcea01@gmail.com}}
+%
+%
+%
+%
+%
+\begin{document}
+\maketitle             
+
+\begin{abstract}
+\^{I}n aceast\u{a} lucrare vom analiza, compara \c{s}i discuta principalii algoritmi ce abordeaz\u{a} tematica lucr\u{a}rii mele \c{s}i anume: Drumuri minime in graf - Costul minim de la un nod la toate celelalte. \\
+
+Fiecare algoritm abordat va avea propria explica\c{t}ie \c{s}i mod de prezentare unic, dar, pentru fiecare dintre acestea, se va \^{i}ncerca urmarea unei structuri \c{s}i anume: \\
+
+\begin{itemize}
+	\item Prezentare
+	\item Avantaje \c{s}i dezavantaje
+	\item Complexit\u{a}\c{t}i
+	\item Alte detalii
+\end{itemize}
+
+\keywords{Dijkstra \and Bellman-Ford \and Graphs \and Distan\c{t}e minime}
+\end{abstract}
+%
+%
+%
+%
+%
+\section{Introducere}
+\subsection{Descrierea problemei rezolvate}
+\hspace{6pt}Grafurile nu au nevoie de o introducere. Teoria grafurilor s-a dezvoltat \^{i}mpreun\u{a} cu algebra \c{s}i au multiple aplicaţii practice, fiind strâns legate de multe ramuri ale matematicii, c\^{a}t \c{s}i ale informaticii. 
+\paragraph{} Printre utilitit\u{a}\c{t}ile lor se afl\u{a}, \^{i}n special, modelarea de situa\c{t}ii din via\c{a} real\u{a}: conexiuni, re\c{t}ele de calculatoare, algoritmi de c\u{a}utare (Page Rank), h\u{a}r\c{t}i rutiere, etc... 
+
+\paragraph{} Lucrarea curent\u{a} urm\u{a}re\c{s}te analiza algoritmilor principali folosi\c{t}i \^{i}n determinarea drumurilor minime \^{i}ntre noduri, acest lucru av\^{a}nd multe utilita\c{t}i practice, c\^{a}teva dintre acestea fiind enumerate mai jos.
+
+\subsection{Aplica\c{t}ie practic\u{a} la problem\u{a}}
+Printre cele mai importante aplica\c{t}ii practice rezolvate folosind drumurile minime reg\u{a}sim:
+\begin{itemize}
+	\item Găsirea drumului minim dintre doua locații (Google Maps, GPS etc.)
+	\item Rutare in cadrul unei rețele (telefonice, de calculatoare etc.)
+	\item G\u{a}sirea de sugestii (de ex. de prietenie) pe re\c{t}elele sociale
+	\item Robo\c{t}i inteligen\c{t}i
+\end{itemize}
+
+\subsection{Specificarea solu\c{t}iilor alese}
+\paragraph{}Pentru a rezolva problema drumurilor minime, voi aborda algoritmii Bellman-Ford \c{s}i Dijkstra (normal si optimizat), c\^{a}t \c{s}i shortest path \^{i}ntr-un graf aciclic orientat. Ei vor fi detalia\c{t}i urm\u{a}rind aceea\c{s}i structur\u{a} \c{s}i vor fi testa\c{t}i, pe c\^{a}t posibil, cu seturi de date similare.
+\paragraph{}Algoritmul Dijkstra se bazeaz\u{a} pe etichete aflate pe ramuri ce reprezint\u{a} distan\c{t}a dintre doua noduri. Acesta are o complexitate de O($V^2$),  unde V reprezint\u{a} num\u{a}rul de noduri, complexitate care este redus\u{a} la O($V + E * \log{V}$), unde E reprezint\u{a} numarul de muchii, atunci c\^{a}nd folosim o coad\u{a} de priorita\c{t}i.
+
+\paragraph{}Algoritmul Bellman Ford poate fi folosit doar atunci c\u{a}nd nu exist\u{a} niciun ciclu \^{i}n graf. Acesta func\c{t}ioneaz\u{a} dup\u{a} principiul de actualizare constant\u{a} a distan\c{t}ei dintre noduri \^{i}n timp ce sunt parcurse, ca \^{i}n final s\u{a} se ating\u{a} solu\c{t}ia optim\u{a}. Complexitatea acestui algoritm este O($V*E$), unde V reprezint\u{a} num\u{a}rul de noduri, iar E num\u{a}rul de muchii.
+
+\subsection{Criteriile de evaluare pentru solu\c{t}ia propus\u{a}}
+\hspace{6pt}\^{I}n evaluarea algoritmilor voi folosi \^{i}n prim\u{a} faz\u{a} seturi de teste din surse externe, datorit\u{a} faptului c\u{a} acestea ofera \c{s}i raspunsul, astfel put\^{a}nd confirma at\^{a}t corectitudinea algoritmului, c\^{a}t \c{s}i compara cu timpii de rulare oferi\c{t}i de aceste surse.
+\paragraph{}De asemenea, \^{i}mi voi crea propriile seturi de date \^{i}n \^{i}ncercarea de a exploata slabiciuni ale algoritmilor.
+\paragraph{}Voi folosi seturi variate de date \c{s}i cantita\c{t}i diferite de date, iar, \^{i}n final, voi face medii din r\u{a}spunsurile pe care le-am ob\c{t}inut, at\^{a}t pe PC-ul meu, dar \c{s}i pe alte PC-uri \c{s}i compilatoare online.
+
+\newpage
+\section{Prezentarea solu\c{t}iilor}
+
+A\c{s}a cum am men\c{t}ionat anterior, algoritmii implementa\c{t}i sunt urm\u{a}torii:
+
+\begin{itemize}
+	\item Dijkstra distan\c{t}e minime
+	\item BellmanFord
+	\item Dijkstra optimizat
+	\item Cele mai scurte c\u{a}i \^{i}ntr-un graf orientat aciclic
+\end{itemize}
+
+\subsection{Dijkstra distan\c{t}e minime}
+\hspace{20px} Algoritmul Dijkstra este folosit  pentru găsirea celor mai scurte căi între noduri dintr-un graf. A fost conceput de informaticianul Edsger W. Dijkstra în 1956 și publicat trei ani mai târziu.
+
+Algoritmul există în multe variante. Cel original a găsit calea cea mai scurtă între două noduri date, dar o variantă mai comună fixează un singur nod ca nod "sursă" și găsește cele mai scurte căi de la sursă la toate celelalte noduri din grafic, producând cea mai scurtă cale.
+
+\^{I}n implementarea mea, doi vectori memoreaza distan\c{t}ele \c{s}i nodurile vizitate. Dupa aceea, distan\c{t}ele sunt modificate progresiv pentru a ajunge la distan\c{t}ele minime. \^{I}n final, se afi\c{s}eaz\u{a} rezultatele.
+
+Acesta are o complexitate de O($V^2$),  unde V reprezint\u{a} num\u{a}rul de noduri, complexitate care este redus\u{a} la O($V + E * \log{V}$), unde E reprezint\u{a} numarul de muchii, atunci c\^{a}nd folosim o coad\u{a} de priorita\c{t}i.
+
+Avantaje:
+\begin{itemize}
+	\item Complexitatea de O($n^2$) este una suficient de bun\u{a} pentru utilizarea acestuia pe grafuri mari.
+	\item Poate fi folosit pentru a calcula distan\c{t}a minim\u{a} de la un nod la celelalte, c\^{a}t \c{s}i la un singur nod, oprind algoritmul dup\u{a} ce atinge nodul specificat.
+\end{itemize}
+
+Dezavantaje:
+\begin{itemize}
+	\item Nu func\c{t}ioneaz\u{a} pe muchii cu valori negative.
+	\item Necesitatea de a urm\u{a}ri ce noduri au fost vizitate.
+\end{itemize}
+
+\subsection{BellmanFord}
+\hspace{20px}Algoritmul Bellman-Ford este un algoritm care calculează cele mai scurte căi de la un singur vârf sursă la toate celelalte vârfuri dintr-un digraf ponderat. Este mai lent decât algoritmul lui Dijkstra pentru aceeași problemă, dar mai versatil, deoarece este capabil să gestioneze grafice în care unele dintre greutățile muchiilor sunt numere negative.
+
+Greutățile marginilor negative se găsesc în diverse aplicații ale graficelor, de unde și utilitatea acestui algoritm. Dacă un grafic conține un "ciclu negativ" (adică un ciclu ale cărui margini însumează o valoare negativă) care este accesibil de la sursă, atunci nu există calea cea mai rapidă: orice cale care are un punct pe ciclul negativ poate fi făcută mai rapidă prin încă o plimbare în jurul ciclului negativ. Într-un astfel de caz, algoritmul Bellman-Ford poate detecta și raporta ciclul negativ.
+
+\^{I}n implementarea mea, se seteaz\u{a} vectorul de distan\c{t}e cu valori maxime. Acesta se actualizeaz\u{a} cu ajutorul greut\u{a}\c{t}iilor de pe muchii, iar apoi se seteaz\u{a} distan\c{t}ele minime. 
+
+Complexitatea algoritmului este O(VE), unde V reprezint\u{a} numarul de noduri, iar E reprezint\u{a} numarul de muchii.
+\vspace{20pt}
+Avantaje:
+\begin{itemize}
+	\item Lucrul cu muchii negative.
+	\item Poate fi folosit pentru a depista cicluri negative.
+\end{itemize}
+
+Dezavantaje:
+\begin{itemize}
+	\item Complexitatea mare.
+	\item Nu poate rezolva cicluri negative, ci doar muchii negative.
+\end{itemize}
+
+\subsection{Dijkstra optimizat}
+\hspace{20px}Algoritmul lui Dijkstra poate fi modificat prin utilizarea diferitelor structuri de date, găleți (buckets), care se numește implementare de apelare a algoritmului lui Dijkstra. complexitatea temporala devenind O (E + WV) unde W este greutatea maximă pe orice margine a graficului, deci putem vedea că, dacă W este mic, atunci această implementare rulează mult mai rapid decât algoritmul tradițional.
+
+\^{I}n implementarea mea, se creeaz\u{a} o list\u{a} de g\u{a}le\c{t}i. Se merge prin fiecare bucket, \c{s}i, at\^{a}t timp c\^{a}t nu sunt goale toate, proceseaz\u{a} nodul din v\^{a}rf \c{s}i actualizeaz\u{a} distan\c{t}ele fa\c{t}\u{a} de acel nod \^{i}n func\c{t}ie de greut\u{a}\c{t}i.
+
+Complexitatea algoritmului este O(E + WV), unde V reprezint\u{a} numarul de noduri, E reprezint\u{a} numarul de muchii, iar W reprezin\u{a} greutatea maxima a unei muchii.
+
+Avantaje:
+\begin{itemize}
+	\item Mai rapid decat algoritmul normal dac\u{a} avem greut\u{a}ti mici.
+\end{itemize}
+
+Dezavantaje:
+\begin{itemize}
+	\item Utilizarea mai mult\u{a} de memorie.
+\end{itemize}
+
+\subsection{Cele mai scurte c\u{a}i \^{i}ntr-un graf orientat aciclic}
+\hspace{20px }Pentru un grafic ponderat general, putem calcula cele mai scurte distanțe de o singură sursă în timp O(VE) folosind algoritmul Bellman-Ford. Pentru un grafic fără ponderi negative, putem face mai bine și putem calcula cele mai scurte distanțe cu o singură sursă în timp O(E + VLogV) folosind algoritmul lui Dijkstra. Putem calcula cele mai scurte distanțe de o singură sursă în timp O(V+E) pentru un grafic aciclic orientat folosind sortarea topologic\u{a}.
+
+\^{I}n implementarea mea, sort\u{a}m topologic graful \c{s}i adaug\u{a}m \^{i}n acest sens nodurile \^{i}ntr-un stack din care scoatem progresiv nodurile \c{s}i actualiz\u{a}m distan\c{t}ele.
+
+Complexitatea algoritmului este O(V+E), unde V reprezint\u{a} numarul de noduri, iar E reprezint\u{a} numarul de muchii.
+
+Avantaje:
+\begin{itemize}
+	\item Cel mai rapid algoritm dintre cele 4.
+\end{itemize}
+
+Dezavantaje:
+\begin{itemize}
+	\item De\c{s}i este cel mai rapid algoritm, acesta are dezavantajul de a func\c{t}iona doar \^{i}n cazul unui graf aciclic orientat,
+\end{itemize}
+
+\newpage
+\section{Evaluare}
+\subsection{Set de teste}
+Setul de teste a provenit din mai multe surse.
+\^{I}n primul r\^{a}nd, am preluat teste din surse online precum GeeksForGeeks pentru a testa implement\u{a}rile mele cu teste valide realizate de alti programatori.
+\^{I}n al doilea r\u{a}nd, am generat manual teste pentru a testa func\c{t}ionalitatea general\u{a} a algoritmilor, c\^{a}t \c{s}i func\c{t}ionarea \^{i}n cazuri limit\u{a}. Spre exemplu, am testat modul \^{i}n care se execut\u{a} algoritmii \^{i}n cazul unor cicluri negative. Un alt exemplu este testarea plec\u{a}rii din diferite noduri, chiar \c{s}i din noduri inexistente, pentru a testa rezultatul.
+
+\subsection{Sistem}
+Sistemul pe care au rulat testele include un procesor AMD R3 2200G, o plac\u{a} video RX 550 2 GB si RAM Kingston FURY Beast 8GB DDR4, 3200MHz CL16, Dual Channel Kit
+
+\subsection{Ilustrare rezultate}
+Nu pot folosi vreun grafic aici sau tabel, c\u{a}ci toate rezultatele se v\u{a}d la rularea programului, fiecare test afi\c{s}\^{a}nd output-ul programului, c\^{a}t si output-ul a\c{s}teptat.
+
+\subsection{Prezentare valori}
+Din rularea testelor se afiseaz\u{a} output-ul programului, c\^{a}t si output-ul asteptat.
+
+\section{Concluzii}
+\^{I}n urma analizei, fiecare algoritm exceleaz\u{a} \^{i}n anumite situa\c{t}ii.
+Astfel, a\c{s} opta pentru BellmanFord c\^{a}nd lucr\u{a}m pe grafuri care con\c{t}in muchii negative.
+Pentru grafuri orientate acicilice, cel mai eficient algoritm pe care \^{i}l voi folosi este Cele mai scurte c\u{a}i \^{i}ntr-un graf orientat aciclic.
+\^{I}n restul cazurilor, voi folosi Dijkstra sau Dijkstra optimized, \^{i}n func\c{t}ie de device-ul pe care lucrez. Dac\u{a} memoria nu este o problema, voi folosi algoritmul optimizat, iar, \^{i}n caz contrar, pe cel normal.
+
+\newpage
+\begin{thebibliography}{8}
+\bibitem{ref_article1}
+OCW: https://ocw.cs.pub.ro/courses/pa/laboratoare/laborator-09
+
+\bibitem{ref_article1}
+OCW: https://ocw.cs.pub.ro/courses/pa/laboratoare/laborator-07
+
+\bibitem{ref_article1}
+RASFOIESC: https://www.rasfoiesc.com/educatie/matematica/Drumuri-minime-in-grafuri24.php
+
+\bibitem{ref_article1}
+GEEKS FOR GEEKS: https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
+
+\bibitem{ref_article1}
+GEEKS FOR GEEKS: https://www.geeksforgeeks.org/shortest-path-in-a-directed-graph-by-dijkstras-algorithm/
+
+\bibitem{ref_article1}
+GEEKS FOR GEEKS: https://www.geeksforgeeks.org/bellman-ford-algorithm-dp-23/
+
+\bibitem{ref_article1}
+HACKEREARTH: https://www.hackerearth.com/practice/algorithms/graphs/shortest-path-algorithms/tutorial/
+\end{thebibliography}
+%
+%
+%
+%
+%
+\end{document}
